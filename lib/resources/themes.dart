@@ -5,7 +5,7 @@ class AppThemes {
   static final lightTheme = ThemeData(
       canvasColor: Colors.deepPurple[100],
       textTheme: TextTheme(
-        bodyLarge: AppTextStyles.titleTextStyle,
+        bodyLarge: AppTextStyles.titleTextStyle
       ),
       appBarTheme: AppBarTheme(
           color: Colors.deepPurple[100]
@@ -15,10 +15,10 @@ class AppThemes {
   static final darkTheme = ThemeData(
     canvasColor: Colors.black,
     textTheme: TextTheme(
-      bodyLarge: AppTextStyles.titleTextStyle.copyWith(color: Colors.white),
+      bodyLarge: AppTextStyles.titleTextStyle.copyWith(color: Colors.white)
     ),
     appBarTheme: const AppBarTheme(
         color: Colors.black
-    ),
+    )
   );
 }
