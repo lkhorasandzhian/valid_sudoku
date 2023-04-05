@@ -157,6 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton.extended(
+            heroTag: 'Clear',
             onPressed: () {
               for (var row in sudoku) {
                 for (var ctrl in row) {
@@ -169,6 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           const SizedBox(width: 10),
           FloatingActionButton.extended(
+            heroTag: 'Generate',
             onPressed: () {
               sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
               _transferPresentation();
@@ -177,6 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: const Text('Generate')),
           const SizedBox(width: 10),
           FloatingActionButton.extended(
+            heroTag: 'Hint',
             onPressed: () {
               try {
                 for (var i = 0; i < sudoku.length; i++) {
