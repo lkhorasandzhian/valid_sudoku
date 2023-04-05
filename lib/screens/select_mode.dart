@@ -6,7 +6,8 @@ class SelectMode extends StatelessWidget {
   final bool isTipsOn;
 
   const SelectMode({
-    super.key, required this.isTipsOn
+    super.key,
+    required this.isTipsOn
   });
 
   @override
@@ -31,14 +32,12 @@ class SelectMode extends StatelessWidget {
             MenuButton(
               text: 'Auto Generate',
               color: MaterialStateProperty.all(Colors.green),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SelectDifficulty(isTipsOn: isTipsOn)
-                  )
-                );
-              }
+              onPressed: () => Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                   builder: (context) => SelectDifficulty(isTipsOn: isTipsOn)
+                                 )
+                               )
             ),
             const SizedBox(height: 10),
             MenuButton(
@@ -52,9 +51,7 @@ class SelectMode extends StatelessWidget {
             MenuButton(
               text: 'Back',
               color: MaterialStateProperty.all(Colors.yellow),
-              onPressed: () {
-                Navigator.pop(context);
-              }
+              onPressed: () => Navigator.pop(context)
             )
           ]
         )

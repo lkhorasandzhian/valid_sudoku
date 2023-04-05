@@ -6,7 +6,8 @@ class SelectDifficulty extends StatelessWidget {
   final bool isTipsOn;
 
   const SelectDifficulty({
-    super.key, required this.isTipsOn
+    super.key,
+    required this.isTipsOn
   });
 
 
@@ -32,48 +33,40 @@ class SelectDifficulty extends StatelessWidget {
             MenuButton(
               text: 'Easy',
               color: MaterialStateProperty.all(Colors.green),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyHomePage(level: 27, isTipsOn: isTipsOn)
-                  )
-                );
-              }
+              onPressed: () => Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                   builder: (context) => MyHomePage(level: 27, isTipsOn: isTipsOn)
+                                 )
+                               )
             ),
             const SizedBox(height: 10),
             MenuButton(
               text: 'Medium',
               color: MaterialStateProperty.all(Colors.orange),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyHomePage(level: 36, isTipsOn: isTipsOn)
-                  )
-                );
-              }
+              onPressed: () => Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                   builder: (context) => MyHomePage(level: 36, isTipsOn: isTipsOn)
+                                 )
+                               )
             ),
             const SizedBox(height: 10),
             MenuButton(
               text: 'Hard',
               color: MaterialStateProperty.all(Colors.red),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyHomePage(level: 54, isTipsOn: isTipsOn)
-                  )
-                );
-              }
+              onPressed: () => Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                   builder: (context) => MyHomePage(level: 54, isTipsOn: isTipsOn)
+                                 )
+                               )
             ),
             const SizedBox(height: 10),
             MenuButton(
               text: 'Back',
               color: MaterialStateProperty.all(Colors.yellow),
-              onPressed: () {
-                Navigator.pop(context);
-              }
+              onPressed: () => Navigator.pop(context)
             )
           ]
         )

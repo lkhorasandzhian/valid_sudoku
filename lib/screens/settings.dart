@@ -47,9 +47,7 @@ class SettingsState extends State<Settings> {
             MenuButton(
               text: 'Themes',
               color: MaterialStateProperty.all(Colors.green),
-              onPressed: () {
-                context.read<ThemeProvider>().changeTheme();
-              }
+              onPressed: () => context.read<ThemeProvider>().changeTheme()
             ),
             const SizedBox(height: 10),
             SizedBox(
@@ -57,15 +55,11 @@ class SettingsState extends State<Settings> {
               width: 250,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: isTipsOn
-                      ? MaterialStateProperty.all(Colors.green)
-                      : MaterialStateProperty.all(Colors.red),
+                  backgroundColor: isTipsOn ?
+                                   MaterialStateProperty.all(Colors.green) :
+                                   MaterialStateProperty.all(Colors.red)
                 ),
-                onPressed: () {
-                  setState(() {
-                    isTipsOn = !isTipsOn;
-                  });
-                },
+                onPressed: () => (setState(() => isTipsOn = !isTipsOn)),
                 child: Text(
                   'Tips',
                   style: AppTextStyles.buttonTextStyle
@@ -76,9 +70,7 @@ class SettingsState extends State<Settings> {
             MenuButton(
               text: 'Back',
               color: MaterialStateProperty.all(Colors.yellow),
-              onPressed: () {
-                Navigator.pop(context, isTipsOn);
-              }
+              onPressed: () => Navigator.pop(context, isTipsOn)
             )
           ]
         )

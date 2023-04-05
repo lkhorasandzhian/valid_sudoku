@@ -26,19 +26,20 @@ class _MyHomePageState extends State<MyHomePage> {
     sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
     var digitField = sudokuGenerator.newSudoku;
 
-    for (var i = 0; i < 9; ++i) {
+    for (int i = 0; i < 9; ++i) {
       sudoku.add([]);
       List<Widget> sudokuColumn = <Widget>[];
 
-      for (var l = 0; l < 9; ++l) {
+      for (int j = 0; j < 9; ++j) {
         final TextEditingController controller = TextEditingController(
-            text: digitField[i][l] != 0 ? digitField[i][l].toString() : "");
+          text: digitField[i][j] != 0 ? digitField[i][j].toString() : ""
+        );
         sudoku[i].add(controller);
 
         sudokuColumn.add(
           Expanded(
             child: TextField(
-              enabled: digitField[i][l] == 0,
+              enabled: digitField[i][j] == 0,
               textAlign: TextAlign.center,
               textAlignVertical: TextAlignVertical.center,
               maxLength: 1,
@@ -57,13 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 counter: null,
                 suffix: null,
                 counterText: "",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
+                border: OutlineInputBorder()
+              )
+            )
+          )
         );
 
-        if ((l + 1) % 3 == 0) {
+        if ((j + 1) % 3 == 0) {
           sudokuColumn.add(const SizedBox(height: 8));
         }
       }
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool _isSave(row, col, number) {
-    for (var i = 0; i < 9; ++i) {
+    for (int i = 0; i < 9; ++i) {
       if (sudoku[i][col].text == number.toString() && i != row ||
           sudoku[row][i].text == number.toString() && i != col) {
         return false;
@@ -89,8 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
     int startRow = row - row % 3;
     int startColumn = col - col % 3;
 
-    for (var i = 0; i < 3; ++i) {
-      for (var j = 0; j < 3; ++j) {
+    for (int i = 0; i < 3; ++i) {
+      for (int j = 0; j < 3; ++j) {
         if (!(i + startRow == row && j + startColumn == col) &&
             sudoku[i + startRow][j + startColumn].text == number.toString()) {
           return false;
@@ -115,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return _solve(row, col + 1);
     }
 
-    for (var i = 1; i < 10; ++i) {
+    for (int i = 1; i < 10; ++i) {
       if (_isSave(row, col, i)) {
         sudoku[row][col].text = i.toString();
 
@@ -182,11 +183,11 @@ class _MyHomePageState extends State<MyHomePage> {
             heroTag: 'Hint',
             onPressed: () {
               try {
-                for (var i = 0; i < sudoku.length; i++) {
-                  for (var l = 0; l < sudoku[i].length; l++) {
-                    if (sudoku[i][l].text == "") {
-                      sudoku[i][l].text = "0";
-                    } else if (!_isSave(i, l, int.parse(sudoku[i][l].text))) {
+                for (int i = 0; i < sudoku.length; ++i) {
+                  for (int j = 0; j < sudoku[i].length; ++j) {
+                    if (sudoku[i][j].text == "") {
+                      sudoku[i][j].text = "0";
+                    } else if (!_isSave(i, j, int.parse(sudoku[i][j].text))) {
                       throw "Impossible";
                     }
                   }
@@ -216,8 +217,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _transferPresentation() {
     var digitField = sudokuGenerator.newSudoku;
 
-    for (var i = 0; i < 9; ++i) {
-      for (var j = 0; j < 9; ++j) {
+    for (int i = 0; i < 9; ++i) {
+      for (int j = 0; j < 9; ++j) {
         sudoku[i][j].text =
         digitField[i][j] != 0 ? digitField[i][j].toString() : "";
       }

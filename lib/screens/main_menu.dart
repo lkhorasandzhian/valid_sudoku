@@ -37,30 +37,27 @@ class MainMenuState extends State<MainMenu> {
             MenuButton(
               text: 'Play',
               color: MaterialStateProperty.all(Colors.green),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SelectMode(isTipsOn: isTipsOn))
-                );
-              }
+              onPressed: () => Navigator.push(
+                                 context,
+                                 MaterialPageRoute(builder: (context) => SelectMode(isTipsOn: isTipsOn))
+                               )
             ),
             const SizedBox(height: 10),
             MenuButton(
               text: 'Settings',
               color: MaterialStateProperty.all(Colors.green),
-              onPressed: () async {
-                isTipsOn = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Settings(lastIsTipsOn: isTipsOn))
-                );
-              }
+              onPressed: () async => isTipsOn = await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => Settings(lastIsTipsOn: isTipsOn)
+                                                        )
+                                                      )
             ),
             const SizedBox(height: 10),
             MenuButton(
               text: 'Exit',
               color: MaterialStateProperty.all(Colors.red),
               onPressed: () {
-                debugPrint("kIsWeb = $kIsWeb");
                 if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
                   exit(0);
                 }
