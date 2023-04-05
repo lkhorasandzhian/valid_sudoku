@@ -33,7 +33,6 @@ class SelectDifficulty extends StatelessWidget {
               text: 'Easy',
               color: MaterialStateProperty.all(Colors.green),
               onPressed: () {
-                debugPrint(isTipsOn.toString());
                 Navigator.push(
                   context,
                   MaterialPageRoute(
