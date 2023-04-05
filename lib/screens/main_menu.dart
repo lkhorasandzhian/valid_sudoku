@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:valid_sudoku/screens/select_mode.dart';
 import 'package:valid_sudoku/screens/settings.dart';
 import 'package:valid_sudoku/widgets/menu_button.dart';
 
@@ -37,7 +38,10 @@ class MainMenuState extends State<MainMenu> {
               text: 'Play',
               color: MaterialStateProperty.all(Colors.green),
               onPressed: () {
-                // TODO: Select mode button.
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectMode(isTipsOn: isTipsOn))
+                );
               }
             ),
             const SizedBox(height: 10),
