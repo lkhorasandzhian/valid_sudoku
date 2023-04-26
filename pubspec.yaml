@@ -37,6 +37,9 @@ dependencies:
   # Helpful library for data providing.
   provider: ^6.0.2
 
+  # Essential library for window size control.
+  window_manager: ^0.3.2
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
