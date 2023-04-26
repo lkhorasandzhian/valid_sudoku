@@ -23,3 +23,7 @@ doc/api/
 
 # Test folder concealment.
 test/
+
+# Metadata for plugins and their dependencies.
+.flutter-plugins
+.flutter-plugins-dependencies
