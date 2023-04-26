@@ -164,9 +164,11 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton.extended(
             heroTag: 'Clear',
             onPressed: () {
-              for (var row in sudoku) {
-                for (var ctrl in row) {
-                  ctrl.text = "";
+              for (int i = 0; i < 9; ++i) {
+                for (int j = 0; j < 9; ++j) {
+                  if (sudokuGenerator.newSudoku[i][j] == 0) {
+                    sudoku[i][j].text = "";
+                  }
                 }
               }
             },
