@@ -40,6 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: TextField(
               enabled: digitField[i][j] == 0,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.deny("0")
+              ],
               textAlign: TextAlign.center,
               textAlignVertical: TextAlignVertical.center,
               maxLength: 1,
