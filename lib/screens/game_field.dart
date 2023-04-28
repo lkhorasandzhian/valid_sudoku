@@ -141,7 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Valid Sudoku'),
+        title: const Text(
+          'Valid Sudoku',
+          style: TextStyle(color: Colors.deepPurple)
+        ),
         automaticallyImplyLeading: false,
       ),
       body: Center(
