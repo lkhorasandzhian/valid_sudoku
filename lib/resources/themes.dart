@@ -13,12 +13,12 @@ class AppThemes {
   );
 
   static final darkTheme = ThemeData(
-    canvasColor: Colors.black,
-    textTheme: TextTheme(
-      bodyLarge: AppTextStyles.titleTextStyle.copyWith(color: Colors.white)
-    ),
-    appBarTheme: const AppBarTheme(
-        color: Colors.black
-    )
+      canvasColor: const Color.fromRGBO(30, 31, 34, 20),
+      textTheme: TextTheme(
+        bodyLarge: AppTextStyles.titleTextStyle.copyWith(color: Colors.white)
+      ),
+      appBarTheme: const AppBarTheme(
+        color: Color.fromRGBO(43, 45, 48, 20)
+      )
   );
 }
