@@ -24,48 +24,78 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
+
     var digitField = sudokuGenerator.newSudoku;
 
     for (int i = 0; i < 9; ++i) {
       sudoku.add([]);
-      List<Widget> sudokuColumn = <Widget>[];
-
       for (int j = 0; j < 9; ++j) {
-        final TextEditingController controller = TextEditingController(
-          text: digitField[i][j] != 0 ? digitField[i][j].toString() : ""
+        var controller = TextEditingController(
+            text: digitField[i][j] != 0 ? digitField[i][j].toString() : ""
         );
         sudoku[i].add(controller);
+      }
+    }
 
+    super.initState();
+  }
+
+  bool _isCorrectCell(int i, int j) {
+    return sudoku[i][j].text.isEmpty || sudoku[i][j].text == sudokuGenerator.newSudokuSolved[i][j].toString();
+  }
+
+  List<Widget> _getSudokuWidget() {
+    if (sudokuWidget.isNotEmpty) {
+      sudokuWidget.clear();
+    }
+
+    var digitField = sudokuGenerator.newSudoku;
+
+    for (int i = 0; i < 9; ++i) {
+      List<Widget> sudokuColumn = <Widget>[];
+      for (int j = 0; j < 9; ++j) {
         sudokuColumn.add(
-          Expanded(
-            child: TextField(
-              enabled: digitField[i][j] == 0,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                FilteringTextInputFormatter.deny("0")
-              ],
-              textAlign: TextAlign.center,
-              textAlignVertical: TextAlignVertical.center,
-              maxLength: 1,
-              maxLines: 1,
-              minLines: 1,
-              scrollPadding: EdgeInsets.zero,
-              autocorrect: false,
-              buildCounter: null,
-              keyboardType: TextInputType.number,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              controller: controller,
-              style: const TextStyle().copyWith(color: Colors.white),
-              decoration: const InputDecoration(
-                prefix: null,
-                contentPadding: EdgeInsets.zero,
-                counter: null,
-                suffix: null,
-                counterText: "",
-                border: OutlineInputBorder()
-              )
+            Expanded(
+                child: TextField(
+                    onChanged: (numberInput) {
+                      setState(() {
+                        sudoku[i][j].text = numberInput;
+                      });
+                    },
+                    // enabled: digitField[i][j] == 0,
+                    readOnly: digitField[i][j] != 0,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      FilteringTextInputFormatter.deny("0")
+                    ],
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                    maxLength: 1,
+                    maxLines: 1,
+                    minLines: 1,
+                    scrollPadding: EdgeInsets.zero,
+                    autocorrect: false,
+                    buildCounter: null,
+                    keyboardType: TextInputType.number,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    controller: sudoku[i][j],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: _isCorrectCell(i, j) ? Colors.black : Colors.red,
+                    ),
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefix: null,
+                        contentPadding: EdgeInsets.zero,
+                        counter: null,
+                        suffix: null,
+                        counterText: "",
+                        border: OutlineInputBorder()
+                    )
+                )
             )
-          )
         );
 
         if ((j + 1) % 3 == 0) {
@@ -80,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
-    super.initState();
+    return sudokuWidget;
   }
 
   @override
@@ -104,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: SizedBox.square(
             dimension: widthContainer,
             child: Row(
-              children: sudokuWidget,
+              children: _getSudokuWidget()
             )
           )
         )
