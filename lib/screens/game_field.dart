@@ -83,58 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  bool _isSave(row, col, number) {
-    for (int i = 0; i < 9; ++i) {
-      if (sudoku[i][col].text == number.toString() && i != row ||
-          sudoku[row][i].text == number.toString() && i != col) {
-        return false;
-      }
-    }
-
-    int startRow = row - row % 3;
-    int startColumn = col - col % 3;
-
-    for (int i = 0; i < 3; ++i) {
-      for (int j = 0; j < 3; ++j) {
-        if (!(i + startRow == row && j + startColumn == col) &&
-            sudoku[i + startRow][j + startColumn].text == number.toString()) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
-  bool _solve([row = 0, col = 0]) {
-    if (col == sudoku[0].length) {
-      ++row;
-      col = 0;
-    }
-
-    if (row == sudoku[0].length || col == sudoku[0].length) {
-      return true;
-    }
-
-    if (int.parse(sudoku[row][col].text) > 0) {
-      return _solve(row, col + 1);
-    }
-
-    for (int i = 1; i < 10; ++i) {
-      if (_isSave(row, col, i)) {
-        sudoku[row][col].text = i.toString();
-
-        if (_solve(row, col + 1)) {
-          return true;
-        }
-      }
-
-      sudoku[row][col].text = "0";
-    }
-
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     double widthContainer = MediaQuery.of(context).size.shortestSide;
