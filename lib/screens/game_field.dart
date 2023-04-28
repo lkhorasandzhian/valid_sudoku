@@ -175,62 +175,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               }
             },
-            tooltip: 'Clear',
+            tooltip: 'Clear all filled fields',
             label: const Text('Clear')
           ),
           const SizedBox(width: 10),
           FloatingActionButton.extended(
-            heroTag: 'Generate',
+            heroTag: 'Finish',
             onPressed: () {
-              sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
-              _transferPresentation();
+              // TODO: implement 'Finish' case.
             },
-            tooltip: 'Generate',
-            label: const Text('Generate')),
+            tooltip: 'Finish solving task',
+            label: const Text('Finish')),
           const SizedBox(width: 10),
           FloatingActionButton.extended(
             heroTag: 'Hint',
             onPressed: () {
-              try {
-                for (int i = 0; i < sudoku.length; ++i) {
-                  for (int j = 0; j < sudoku[i].length; ++j) {
-                    if (sudoku[i][j].text == "") {
-                      sudoku[i][j].text = "0";
-                    } else if (!_isSave(i, j, int.parse(sudoku[i][j].text))) {
-                      throw "Impossible";
-                    }
-                  }
-                }
-                if (!_solve()) {
-                  throw "Not found solve";
-                }
-              } catch (e) {
-                debugPrint(e.toString());
-                ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('It is impossible to solve this Sudoku! Check the input!')
-                  )
-                );
-              }
+              // TODO: implement 'Hint' case.
             },
-            tooltip: 'Hint',
+            tooltip: 'Ask a random hint',
             label: const Text('Hint')
           )
         ]
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
     );
-  }
-
-  void _transferPresentation() {
-    var digitField = sudokuGenerator.newSudoku;
-
-    for (int i = 0; i < 9; ++i) {
-      for (int j = 0; j < 9; ++j) {
-        sudoku[i][j].text =
-        digitField[i][j] != 0 ? digitField[i][j].toString() : "";
-      }
-    }
   }
 }
