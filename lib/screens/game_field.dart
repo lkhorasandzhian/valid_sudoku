@@ -20,9 +20,12 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<List<TextEditingController>> sudoku = [];
   List<Widget> sudokuWidget = [];
   late SudokuGenerator sudokuGenerator;
+  late bool _isTipsOn;
 
   @override
   void initState() {
+    _isTipsOn = widget.isTipsOn;
+
     sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
 
     var digitField = sudokuGenerator.newSudoku;
@@ -165,13 +168,16 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: 'Finish solving task',
             label: const Text('Finish')),
           const SizedBox(width: 10),
-          FloatingActionButton.extended(
-            heroTag: 'Hint',
-            onPressed: () {
-              // TODO: implement 'Hint' case.
-            },
-            tooltip: 'Ask a random hint',
-            label: const Text('Hint')
+          Visibility(
+            visible: _isTipsOn,
+            child: FloatingActionButton.extended(
+              heroTag: 'Hint',
+              onPressed: () {
+                // TODO: implement 'Hint' case.
+              },
+              tooltip: 'Ask a random hint',
+              label: const Text('Hint')
+            )
           )
         ]
       ),
