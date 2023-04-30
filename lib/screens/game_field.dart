@@ -190,7 +190,67 @@ class _GameFieldState extends State<GameField> {
           FloatingActionButton.extended(
             heroTag: 'Finish',
             onPressed: () {
-              // TODO: implement 'Finish' case.
+              String message = 'Sudoku solved! You win!';
+              bool isEmpty = false;
+              bool isMistake = false;
+              for (int i = 0; i < sudoku.length; ++i) {
+                for (int j = 0; j < sudoku[i].length; ++j) {
+                  if (sudoku[i][j].text.isEmpty) {
+                    message = 'You haven\'t filled all empty cells...';
+                    isEmpty = true;
+                    break;
+                  } else if (!_isCorrectCell(i, j)) {
+                    message = 'There are mistakes in your solution. Please, try again...';
+                    isMistake = true;
+                  }
+                }
+                if (isEmpty) {
+                  break;
+                }
+              }
+
+              bool isValid = !isEmpty && !isMistake;
+
+              if (!isValid) {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                        title: const Text('Notification'),
+                        content: Text(message),
+                        actions: [
+                          TextButton(
+                            child: const Text('Ok'),
+                            onPressed: () => Navigator.pop(context),
+                          )
+                        ]
+                    )
+                );
+                return;
+              }
+
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Notification'),
+                  content: Text(message),
+                  actions: [
+                    TextButton(
+                      child: const Text('Stay at game'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    TextButton(
+                      child: const Text('Return to main menu'),
+                      onPressed: () {
+                        for (var i = 0; i < 4; ++i) {
+                          Navigator.pop(context);
+                        }
+                      },
+                    )
+                  ]
+                )
+              );
             },
             tooltip: 'Finish solving task',
             label: const Text('Finish')),
