@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sudoku_solver_generator/sudoku_solver_generator.dart';
+import 'package:valid_sudoku/containers/coords.dart';
 
 class GameField extends StatefulWidget {
   final int level;
@@ -21,10 +22,32 @@ class _GameFieldState extends State<GameField> {
   List<Widget> sudokuWidget = [];
   late SudokuGenerator sudokuGenerator;
   late bool _isTipsOn;
+  late Coords _selectedCell;
+  bool _hasSelectedCell = false;
+  late int _tipsCounter;
 
   @override
   void initState() {
     _isTipsOn = widget.isTipsOn;
+
+    if (_isTipsOn) {
+      switch (widget.level) {
+        case 27:
+          _tipsCounter = 7;
+          break;
+        case 36:
+          _tipsCounter = 5;
+          break;
+        case 54:
+          _tipsCounter = 3;
+          break;
+        default:
+          _tipsCounter = 81;
+          break;
+      }
+    } else {
+      _tipsCounter = 0;
+    }
 
     sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
 
@@ -44,7 +67,7 @@ class _GameFieldState extends State<GameField> {
   }
 
   bool _isCorrectCell(int i, int j) {
-    return sudoku[i][j].text.isEmpty || sudoku[i][j].text == sudokuGenerator.newSudokuSolved[i][j].toString();
+    return sudoku[i][j].text == sudokuGenerator.newSudokuSolved[i][j].toString();
   }
 
   List<Widget> _getSudokuWidget() {
@@ -60,6 +83,10 @@ class _GameFieldState extends State<GameField> {
         sudokuColumn.add(
             Expanded(
                 child: TextField(
+                    onTap: () {
+                      _selectedCell = Coords(i, j);
+                      _hasSelectedCell = true;
+                    },
                     onChanged: (numberInput) {
                       setState(() {
                         sudoku[i][j].text = numberInput;
@@ -173,10 +200,36 @@ class _GameFieldState extends State<GameField> {
             child: FloatingActionButton.extended(
               heroTag: 'Hint',
               onPressed: () {
-                // TODO: implement 'Hint' case.
+                if (!_hasSelectedCell || _isCorrectCell(_selectedCell.x, _selectedCell.y)) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const AlertDialog(
+                      title: Text('Notification'),
+                      content: Text('First click on the empty or incorrect cell you want to get as a hint'),
+                    )
+                  );
+                  return;
+                } else if (_tipsCounter == 0) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => const AlertDialog(
+                        title: Text('Notification'),
+                        content: Text('Oops... You have used all your tips!'),
+                      )
+                  );
+                  return;
+                }
+
+                --_tipsCounter;
+
+                int x = _selectedCell.x;
+                int y = _selectedCell.y;
+                var tipsField = sudokuGenerator.newSudokuSolved;
+
+                setState(() => sudoku[x][y].text = tipsField[x][y].toString());
               },
-              tooltip: 'Ask a random hint',
-              label: const Text('Hint')
+              tooltip: 'Ask a hint for the selected cell',
+              label: Text('Hint($_tipsCounter)')
             )
           )
         ]
