@@ -36,7 +36,7 @@ class SelectDifficulty extends StatelessWidget {
               onPressed: () => Navigator.push(
                                  context,
                                  MaterialPageRoute(
-                                   builder: (context) => MyHomePage(level: 27, isTipsOn: isTipsOn)
+                                   builder: (context) => GameField(level: 27, isTipsOn: isTipsOn)
                                  )
                                )
             ),
@@ -47,7 +47,7 @@ class SelectDifficulty extends StatelessWidget {
               onPressed: () => Navigator.push(
                                  context,
                                  MaterialPageRoute(
-                                   builder: (context) => MyHomePage(level: 36, isTipsOn: isTipsOn)
+                                   builder: (context) => GameField(level: 36, isTipsOn: isTipsOn)
                                  )
                                )
             ),
@@ -58,7 +58,7 @@ class SelectDifficulty extends StatelessWidget {
               onPressed: () => Navigator.push(
                                  context,
                                  MaterialPageRoute(
-                                   builder: (context) => MyHomePage(level: 54, isTipsOn: isTipsOn)
+                                   builder: (context) => GameField(level: 54, isTipsOn: isTipsOn)
                                  )
                                )
             ),

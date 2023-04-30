@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sudoku_solver_generator/sudoku_solver_generator.dart';
 
-class MyHomePage extends StatefulWidget {
+class GameField extends StatefulWidget {
   final int level;
   final bool isTipsOn;
 
-  const MyHomePage({
+  const GameField({
     super.key,
     required this.level,
     required this.isTipsOn
   });
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<GameField> createState() => _GameFieldState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _GameFieldState extends State<GameField> {
   final List<List<TextEditingController>> sudoku = [];
   List<Widget> sudokuWidget = [];
   late SudokuGenerator sudokuGenerator;
