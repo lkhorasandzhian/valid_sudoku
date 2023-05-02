@@ -174,6 +174,7 @@ class _GameFieldState extends State<GameField> {
         children: [
           FloatingActionButton.extended(
             heroTag: 'Clear',
+            backgroundColor: Colors.white38,
             onPressed: () {
               for (int i = 0; i < 9; ++i) {
                 for (int j = 0; j < 9; ++j) {
@@ -189,6 +190,7 @@ class _GameFieldState extends State<GameField> {
           const SizedBox(width: 10),
           FloatingActionButton.extended(
             heroTag: 'Finish',
+            backgroundColor: Colors.greenAccent,
             onPressed: () {
               String message = 'Sudoku solved! You win!';
               bool isEmpty = false;
@@ -259,6 +261,7 @@ class _GameFieldState extends State<GameField> {
             visible: _isTipsOn,
             child: FloatingActionButton.extended(
               heroTag: 'Hint',
+              backgroundColor: Colors.amberAccent,
               onPressed: () {
                 if (!_hasSelectedCell || _isCorrectCell(_selectedCell.x, _selectedCell.y)) {
                   showDialog(
@@ -295,6 +298,7 @@ class _GameFieldState extends State<GameField> {
           const SizedBox(width: 10),
           FloatingActionButton.extended(
             heroTag: 'Surrender',
+            backgroundColor: Colors.redAccent,
             onPressed: () {
               showDialog(
                 context: context,
