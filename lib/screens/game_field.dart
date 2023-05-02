@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sudoku_solver_generator/sudoku_solver_generator.dart';
+import 'package:valid_sudoku/containers/sudoku_master.dart';
 import 'package:valid_sudoku/containers/coords.dart';
 
 class GameField extends StatefulWidget {
