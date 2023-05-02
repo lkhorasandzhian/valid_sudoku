@@ -291,6 +291,37 @@ class _GameFieldState extends State<GameField> {
               tooltip: 'Ask a hint for the selected cell',
               label: Text('Hint($_tipsCounter)')
             )
+          ),
+          const SizedBox(width: 10),
+          FloatingActionButton.extended(
+            heroTag: 'Surrender',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Notification'),
+                  content: const Text("Do you really want to stop current game and return to main menu?"),
+                  actions: [
+                    TextButton(
+                      child: const Text('No'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    TextButton(
+                      child: const Text('Yes'),
+                      onPressed: () {
+                        for (var i = 0; i < 4; ++i) {
+                          Navigator.pop(context);
+                        }
+                      }
+                    )
+                  ]
+                )
+              );
+            },
+            tooltip: 'Interrupt current game and exit',
+            label: const Text('Surrender')
           )
         ]
       ),
