@@ -7,10 +7,15 @@ class GameField extends StatefulWidget {
   final int level;
   final bool isTipsOn;
 
+  final List<List<int>>? taskField;
+  final List<List<int>>? solutionField;
+
   const GameField({
     super.key,
     required this.level,
-    required this.isTipsOn
+    required this.isTipsOn,
+    this.taskField,
+    this.solutionField
   });
 
   @override
@@ -19,12 +24,15 @@ class GameField extends StatefulWidget {
 
 class _GameFieldState extends State<GameField> {
   final List<List<TextEditingController>> sudoku = [];
+  late final List<List<int>> task;
+  late final List<List<int>> solution;
   List<Widget> sudokuWidget = [];
-  late SudokuGenerator sudokuGenerator;
+
   late bool _isTipsOn;
+  late int _tipsCounter;
+
   late Coords _selectedCell;
   bool _hasSelectedCell = false;
-  late int _tipsCounter;
 
   @override
   void initState() {
@@ -33,31 +41,37 @@ class _GameFieldState extends State<GameField> {
     if (_isTipsOn) {
       switch (widget.level) {
         case 27:
-          _tipsCounter = 7;
+          _tipsCounter = 5;
           break;
         case 36:
-          _tipsCounter = 5;
+          _tipsCounter = 4;
           break;
         case 54:
           _tipsCounter = 3;
           break;
         default:
-          _tipsCounter = 81;
+          _tipsCounter = 1;
           break;
       }
     } else {
       _tipsCounter = 0;
     }
 
-    sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
+    if (widget.taskField != null && widget.solutionField != null) {
+      task = widget.taskField!;
+      solution = widget.solutionField!;
+    } else {
+      var sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
 
-    var digitField = sudokuGenerator.newSudoku;
+      task = sudokuGenerator.newSudoku;
+      solution = sudokuGenerator.newSudokuSolved;
+    }
 
     for (int i = 0; i < 9; ++i) {
       sudoku.add([]);
       for (int j = 0; j < 9; ++j) {
         var controller = TextEditingController(
-            text: digitField[i][j] != 0 ? digitField[i][j].toString() : ""
+            text: task[i][j] != 0 ? task[i][j].toString() : ""
         );
         sudoku[i].add(controller);
       }
@@ -67,15 +81,13 @@ class _GameFieldState extends State<GameField> {
   }
 
   bool _isCorrectCell(int i, int j) {
-    return sudoku[i][j].text == sudokuGenerator.newSudokuSolved[i][j].toString();
+    return sudoku[i][j].text == solution[i][j].toString();
   }
 
   List<Widget> _getSudokuWidget() {
     if (sudokuWidget.isNotEmpty) {
       sudokuWidget.clear();
     }
-
-    var digitField = sudokuGenerator.newSudoku;
 
     for (int i = 0; i < 9; ++i) {
       List<Widget> sudokuColumn = <Widget>[];
@@ -93,7 +105,7 @@ class _GameFieldState extends State<GameField> {
                       });
                     },
                     // enabled: digitField[i][j] == 0,
-                    readOnly: digitField[i][j] != 0,
+                    readOnly: task[i][j] != 0,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                       FilteringTextInputFormatter.deny("0")
@@ -178,7 +190,7 @@ class _GameFieldState extends State<GameField> {
             onPressed: () {
               for (int i = 0; i < 9; ++i) {
                 for (int j = 0; j < 9; ++j) {
-                  if (sudokuGenerator.newSudoku[i][j] == 0) {
+                  if (task[i][j] == 0) {
                     sudoku[i][j].text = "";
                   }
                 }
@@ -287,9 +299,8 @@ class _GameFieldState extends State<GameField> {
 
                 int x = _selectedCell.x;
                 int y = _selectedCell.y;
-                var tipsField = sudokuGenerator.newSudokuSolved;
 
-                setState(() => sudoku[x][y].text = tipsField[x][y].toString());
+                setState(() => sudoku[x][y].text = solution[x][y].toString());
               },
               tooltip: 'Ask a hint for the selected cell',
               label: Text('Hint($_tipsCounter)')

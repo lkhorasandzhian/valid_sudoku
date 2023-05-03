@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:valid_sudoku/screens/draft_validator.dart';
 import 'package:valid_sudoku/screens/select_difficulty.dart';
 import 'package:valid_sudoku/widgets/menu_button.dart';
 
@@ -43,9 +44,12 @@ class SelectMode extends StatelessWidget {
             MenuButton(
               text: 'My Draft',
               color: MaterialStateProperty.all(Colors.green),
-              onPressed: () {
-                // TODO: create draft screen or something else.
-              }
+              onPressed: () => Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                   builder: (context) => DraftValidator(isTipsOn: isTipsOn)
+                                 )
+                               )
             ),
             const SizedBox(height: 10),
             MenuButton(
