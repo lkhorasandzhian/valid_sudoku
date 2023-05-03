@@ -17,6 +17,11 @@ dependencies:
   # Essential library for window size control.
   window_manager: ^0.3.2
 
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding
+      path: plugins/window_size
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
