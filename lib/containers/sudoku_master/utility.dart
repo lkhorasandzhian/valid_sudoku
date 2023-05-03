@@ -14,6 +14,23 @@ class SudokuUtilities {
     return copiedSudoku;
   }
 
+  static List<List<int>> makeNullSafe(List<List<int?>> sudoku) {
+    var nullSafeSudoku = List.generate(9, (i) => List.generate(9, (j) => 0));
+    try {
+      for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
+          nullSafeSudoku[i][j] = sudoku[i][j] ?? 0;
+        }
+      }
+    } on RangeError {
+      throw InvalidSudokuConfigurationException();
+    }
+    if (!isValidConfiguration(nullSafeSudoku)) {
+      throw InvalidSudokuConfigurationException();
+    }
+    return nullSafeSudoku;
+  }
+
   static bool isValidConfiguration(List<List<int?>> sudoku) {
     bool notInRow(List<List<int?>> sudoku, int rowNumber) {
       var numberSet = <int>{};
