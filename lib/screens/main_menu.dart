@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:valid_sudoku/screens/info.dart';
 import 'package:valid_sudoku/screens/select_mode.dart';
 import 'package:valid_sudoku/screens/settings.dart';
 import 'package:valid_sudoku/widgets/menu_button.dart';
@@ -52,6 +53,15 @@ class MainMenuState extends State<MainMenu> {
                                                             builder: (context) => Settings(lastIsTipsOn: isTipsOn)
                                                         )
                                                       )
+            ),
+            const SizedBox(height: 10),
+            MenuButton(
+                text: 'Info',
+                color: MaterialStateProperty.all(Colors.yellow),
+                onPressed: () => Navigator.push(context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => Info(isTipsOn: isTipsOn)
+                                                ))
             ),
             const SizedBox(height: 10),
             MenuButton(

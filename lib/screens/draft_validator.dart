@@ -188,7 +188,7 @@ class _DraftValidatorState extends State<DraftValidator> {
                         solution = SudokuSolver.solve(task);
                       } else {
                         message = wasException ?
-                          'The task must follow sudoku rules (\'Settings\' -> \'Rules\'), try again...' :
+                          'The task must follow sudoku rules (\'Info\' -> \'Rules\'), try again...' :
                           'The task must have unique solution, try again...';
                       }
                     }
