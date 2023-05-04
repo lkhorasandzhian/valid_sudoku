@@ -14,9 +14,6 @@ dependencies:
   # Helpful library for data providing.
   provider: ^6.0.2
 
-  # Essential library for window size control.
-  window_manager: ^0.3.2
-
   # Special library for URL opening.
   url_launcher: ^6.1.7
 
