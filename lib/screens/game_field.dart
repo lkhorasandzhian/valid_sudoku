@@ -34,6 +34,8 @@ class _GameFieldState extends State<GameField> {
   late Coords _selectedCell;
   bool _hasSelectedCell = false;
 
+  late bool isValidatorMode;
+
   @override
   void initState() {
     _isTipsOn = widget.isTipsOn;
@@ -60,11 +62,13 @@ class _GameFieldState extends State<GameField> {
     if (widget.taskField != null && widget.solutionField != null) {
       task = widget.taskField!;
       solution = widget.solutionField!;
+      isValidatorMode = true;
     } else {
       var sudokuGenerator = SudokuGenerator(emptySquares: widget.level);
 
       task = sudokuGenerator.newSudoku;
       solution = sudokuGenerator.newSudokuSolved;
+      isValidatorMode = false;
     }
 
     for (int i = 0; i < 9; ++i) {
@@ -257,7 +261,7 @@ class _GameFieldState extends State<GameField> {
                     TextButton(
                       child: const Text('Return to main menu'),
                       onPressed: () {
-                        for (var i = 0; i < 4; ++i) {
+                        for (var i = 0; i < 4 + (isValidatorMode ? 1 : 0); ++i) {
                           Navigator.pop(context);
                         }
                       },
@@ -326,7 +330,7 @@ class _GameFieldState extends State<GameField> {
                     TextButton(
                       child: const Text('Yes'),
                       onPressed: () {
-                        for (var i = 0; i < 4; ++i) {
+                        for (var i = 0; i < 4 + (isValidatorMode ? 1 : 0); ++i) {
                           Navigator.pop(context);
                         }
                       }
