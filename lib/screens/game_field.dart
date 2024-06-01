@@ -31,7 +31,7 @@ class _GameFieldState extends State<GameField> {
   late bool _isTipsOn;
   late int _tipsCounter;
 
-  late Coords _selectedCell;
+  Coords _selectedCell = Coords(4, 4);
   bool _hasSelectedCell = false;
 
   late bool isValidatorMode;
@@ -88,6 +88,27 @@ class _GameFieldState extends State<GameField> {
     return sudoku[i][j].text == solution[i][j].toString();
   }
 
+  int _getSector(int x, int y) {
+    int rowSector = x ~/ 3; // Определяем сектор по строке.
+    int colSector = y ~/ 3; // Определяем сектор по столбцу.
+    return rowSector * 3 + colSector + 1; // Возвращаем номер сектора (от 1 до 9).
+  }
+
+  Color _getColorForCell(int currentX, int currentY) {
+    int currentSector = _getSector(currentX, currentY);
+    int selectedSector = _getSector(_selectedCell.x, _selectedCell.y);
+
+    Color sameCellColor = Colors.yellow;
+    Color similarCellColor = const Color(0xFFFFFDD0);
+    Color differentCellColor = Colors.white;
+
+    if (currentSector == selectedSector) {
+      return currentX == _selectedCell.x && currentY == _selectedCell.y ? sameCellColor : similarCellColor;
+    } else {
+      return currentX == _selectedCell.x || currentY == _selectedCell.y ? similarCellColor : differentCellColor;
+    }
+  }
+
   List<Widget> _getSudokuWidget() {
     if (sudokuWidget.isNotEmpty) {
       sudokuWidget.clear();
@@ -100,8 +121,10 @@ class _GameFieldState extends State<GameField> {
             Expanded(
                 child: TextField(
                     onTap: () {
-                      _selectedCell = Coords(i, j);
-                      _hasSelectedCell = true;
+                      setState(() {
+                        _selectedCell = Coords(i, j);
+                        _hasSelectedCell = true;
+                      });
                     },
                     onChanged: (numberInput) {
                       setState(() {
@@ -130,15 +153,15 @@ class _GameFieldState extends State<GameField> {
                       fontSize: 22,
                       color: _isCorrectCell(i, j) ? Colors.black : Colors.red,
                     ),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: _getColorForCell(i, j),
                         prefix: null,
                         contentPadding: EdgeInsets.zero,
                         counter: null,
                         suffix: null,
                         counterText: "",
-                        border: OutlineInputBorder()
+                        border: const OutlineInputBorder()
                     )
                 )
             )
