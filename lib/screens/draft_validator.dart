@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:valid_sudoku/containers/sudoku_master.dart';
@@ -30,6 +31,61 @@ class _DraftValidatorState extends State<DraftValidator> {
     }
 
     super.initState();
+  }
+
+  Future<void> _loadSudokuFromFile() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['sudoku'],
+      );
+      if (result != null) {
+        String filePath = result.files.single.path!;
+        List<List<int?>> loadedSudoku = SudokuFileLoader.loadSudokuFromFile(filePath);
+
+        // Обновление переменной sudoku.
+        setState(() {
+          for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+              int? currentLoadedNumber = loadedSudoku[j][i];
+              sudoku[i][j].text = currentLoadedNumber != null ? currentLoadedNumber.toString() : "";
+            }
+          }
+        });
+      }
+    } on InvalidSudokuFileException catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Invalid Sudoku File'),
+          content: Text(e.errorMessage()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Ok')
+            )
+          ]
+        )
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error loading Sudoku file'),
+          content: Text('An error occurred while loading the Sudoku file: $e'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Ok')
+            )
+          ]
+        )
+      );
+    }
   }
 
   List<List<int>> _castToDigitField(List<List<TextEditingController>> data) {
@@ -236,6 +292,13 @@ class _DraftValidatorState extends State<DraftValidator> {
                   },
                   tooltip: 'Clear all fields',
                   label: const Text('Clear')
+              ),
+              const SizedBox(width: 10),
+              FloatingActionButton.extended(
+                  heroTag: 'Upload',
+                  onPressed: () => _loadSudokuFromFile(),
+                  tooltip: 'Upload file with sudoku task',
+                  label: const Text('Upload')
               )
             ]
         ),

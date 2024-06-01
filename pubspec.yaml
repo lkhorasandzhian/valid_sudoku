@@ -17,6 +17,9 @@ dependencies:
   # Special library for URL opening.
   url_launcher: ^6.1.7
 
+  # Special library for uploading sudoku draft files.
+  file_picker: ^4.0.0
+
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding

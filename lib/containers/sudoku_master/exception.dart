@@ -18,3 +18,10 @@ class UnlikelyUniqueSolutionException implements Exception {
   @override
   String toString() => 'UnlikelyUniqueSolutionException';
 }
+
+class InvalidSudokuFileException implements Exception {
+  String errorMessage() => 'The given file has incorrect data or format.';
+
+  @override
+  String toString() => 'InvalidSudokuFileException';
+}
